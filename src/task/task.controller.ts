@@ -17,6 +17,12 @@ export class TasksController {
   getTask(@Param('id') id: number) {
     return this.taskService.findOne(id);
   }
+
+  @Get()
+  getAllTasks() {
+    return this.taskService.findAll();
+  }
+
   @Post('/create')
   createTask(@Body() body: any) {
     return this.taskService.create(body);

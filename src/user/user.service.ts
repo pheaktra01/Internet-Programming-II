@@ -3,9 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
 
-@Injectable()
+@Injectable() // Marks this class as a provider that can be injected into other classes (like controllers)
 export class UserService {
-  constructor(
+  constructor( // constructor it automatic create instance of UserService and injects the User repository
     @InjectRepository(User)
     private usersRepo: Repository<User>,
   ) {}
