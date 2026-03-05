@@ -34,11 +34,12 @@ export class UsersController {
     @Body() body: { username: string; email: string; password: string },
     @Param('id') id: number,
   ) {
-    return this.userService.update(id, body);
+    return this.userService.update(id, body), { message: `User with id ${id} has been updated successfully.` };
   }
 
   @Delete('/:id')
   deleteUser(@Param('id') id: number) {
-    return this.userService.remove(id);
+    this.userService.remove(id);
+    return { message: `User with id ${id} has been deleted successfully.` };
   }
 }
