@@ -1,4 +1,7 @@
 import { defineStore } from "pinia";
+import axios from 'axios';
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3100';
 
 export const useTodoStore = defineStore("todo", {
   state: () => ({
@@ -9,26 +12,12 @@ export const useTodoStore = defineStore("todo", {
   },
   actions: {
     async fetchTodos() {
-      await new Promise((resolve) => {
-        setTimeout(() => {
-          resolve([
-            {
-              id: 1,
-              name: "Clean house",
-              description: "cleaning house in detail .....",
-              createdAt: "2024-15-07 07:50:00",
-              completedAt: null,
-            },
-            {
-              id: 2,
-              name: "Do homework",
-              description: "Instruction on doing homework ....",
-              createdAt: "2024-05-07 08:00:00",
-              completedAt: "2024-05-07 08:10:00",
-            },
-          ]);
-        }, 1000);
-      }).then((todos) => (this.todos = todos));
+      try {
+        const response = await axios.get(`${API_BASE_URL}/tasks`);
+        this.todos = Array.isArray(response.data) ? response.data : [];
+      } catch (error) {
+        console.error('Failed to fetch todos:', error);
+      }
     },
     toggleStatus(id) {
       const foundIndex = this.todos.findIndex((t) => t.id == id);
