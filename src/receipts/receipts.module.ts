@@ -3,9 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ReceiptsController } from './receipts.controller';
 import { ReceiptsService } from './receipts.service';
 import { Receipt } from './receipts.entity';
+import { NotificationsModule } from '../notifications/notifications.module';
 
 @Module({
-	imports: [TypeOrmModule.forFeature([Receipt])],
+	imports: [TypeOrmModule.forFeature([Receipt]), NotificationsModule],
 	controllers: [ReceiptsController],
 	providers: [ReceiptsService],
 })

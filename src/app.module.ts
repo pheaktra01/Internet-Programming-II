@@ -1,9 +1,10 @@
-import { Module } from '@nestjs/common';
+import { Module, UseGuards } from '@nestjs/common';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ReceiptsModule } from './receipts/receipts.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ReceiptsModule } from './receipts/receipts.module';
       synchronize: true,
     }),
     ReceiptsModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
