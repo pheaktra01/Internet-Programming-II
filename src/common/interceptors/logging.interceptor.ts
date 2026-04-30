@@ -5,8 +5,11 @@ import { tap } from 'rxjs/operators';
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
     intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-        const req = context.switchToHttp().getRequest();
-        const { method, url } = req;
+        const req = context.switchToHttp().getRequest?.();
+        const type = context.getType?.() as string;
+
+        const method = req?.method ?? (type === 'graphql' ? 'GRAPHQL' : 'UNKNOWN');
+        const url = req?.url ?? (type === 'graphql' ? 'graphql' : 'unknown');
 
         const start = Date.now();
         return next.handle().pipe(

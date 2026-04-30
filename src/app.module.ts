@@ -6,6 +6,12 @@ import { AppService } from './app.service';
 import { ReceiptsModule } from './receipts/receipts.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { OrdersModule } from './orders/orders.module';
+import { ProductModule } from './product/product.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
+import { join } from 'path';
+import { CategoryModule } from './category/category.module';
+import { GraphqlModule } from './graphql/graphql.module';
 
 @Module({
   imports: [
@@ -22,6 +28,16 @@ import { OrdersModule } from './orders/orders.module';
     ReceiptsModule,
     NotificationsModule,
     OrdersModule,
+    ProductModule,
+    GraphqlModule,
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+
+      autoSchemaFile: join(process.cwd(), 'src/graphql/schema.gql'),
+
+      playground: true,
+    }),
+    CategoryModule
   ],
   controllers: [AppController],
   providers: [AppService],
